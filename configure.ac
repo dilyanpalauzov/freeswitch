@@ -367,11 +367,12 @@ if test "${LIBTOOL_MAJOR_VERSION}" = "2" ; then
 fi
 AC_MSG_RESULT([using libtool library extension... ${LIBTOOL_LIB_EXTEN}])
 
+CFLAGS="$CFLAGS -Wno-error=address -Wno-error=stringop-truncation -Wno-error=maybe-uninitialized"
 if test "$ax_cv_c_compiler_vendor" = "gnu"; then
   saved_CFLAGS="$CFLAGS"
   AC_CACHE_CHECK([whether compiler supports -Wno-unused-result],
     [ac_cv_gcc_supports_w_no_unused_result], [
-      CFLAGS="$CFLAGS -Wno-unused-result -Wno-error=unused-result"
+      CFLAGS="$CFLAGS -Wno-unused-result -Wno-error=unused-result -Wno-error=deprecated-declarations"
       AC_TRY_COMPILE([],[return 0;],
         [ac_cv_gcc_supports_w_no_unused_result=yes],
         [ac_cv_gcc_supports_w_no_unused_result=no])])
@@ -381,7 +382,7 @@ if test "$ax_cv_c_compiler_vendor" = "gnu"; then
   saved_CFLAGS="$CFLAGS"
   AC_CACHE_CHECK([whether compiler supports -Wno-misleading-indentation],
     [ac_cv_gcc_supports_w_no_misleading_indentation], [
-      CFLAGS="$CFLAGS -Wno-misleading-indentation -Wno-error=misleading-indentation"
+      CFLAGS="$CFLAGS -Wno-misleading-indentation -Wno-error=misleading-indentation -Wno-error=deprecated-declarations"
       AC_TRY_COMPILE([],[return 0;],
         [ac_cv_gcc_supports_w_no_misleading_indentation=yes],
         [ac_cv_gcc_supports_w_no_misleading_indentation=no])])
@@ -414,13 +415,13 @@ if test "x${ax_cv_c_compiler_vendor}"  =  "xsun" ; then
 elif test "x${ax_cv_c_compiler_vendor}" = "xclang" ; then
     APR_ADDTO(SWITCH_AM_CFLAGS, -fPIC -ffast-math)
     APR_ADDTO(SWITCH_AM_CXXFLAGS, -fPIC -ffast-math)
-    APR_ADDTO(SWITCH_AM_CFLAGS, -Werror)
+    APR_ADDTO(SWITCH_AM_CFLAGS, -Werror -Wno-error=deprecated-declarations)
 elif test "x${ax_cv_c_compiler_vendor}" = "xgnu" ; then
     APR_ADDTO(SWITCH_AM_CFLAGS, -fPIC -ffast-math)
     APR_ADDTO(SWITCH_AM_CXXFLAGS, -fPIC -ffast-math)
     AC_SUBST([AM_MOD_AVMD_CXXFLAGS], [-std=gnu99])      # FS-8809, needed for MAP_POPULATE
     if test "$ac_cv_gcc_supports_w_no_unused_result" = yes; then
-      APR_ADDTO(SWITCH_AM_CFLAGS, -Werror)
+      APR_ADDTO(SWITCH_AM_CFLAGS, -Werror -Wno-error=deprecated-declarations -Wno-error=array-bounds)
       APR_ADDTO(SWITCH_AM_CFLAGS, -Wno-unused-result)
     fi
     if test "$ac_cv_gcc_supports_w_no_misleading_indentation" = yes; then
