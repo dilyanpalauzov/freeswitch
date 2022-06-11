@@ -30,7 +30,7 @@
 #include "apr_errno.h"
 
 #if !defined(_ANSI_SOURCE) && defined(_DARWIN_C_SOURCE)
-#define NSIG __DARWIN_NSIG
+//define NSIG __DARWIN_NSIG
 #endif
 
 #if APR_HAVE_SIGNAL_H
